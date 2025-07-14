@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.admissio</groupId>
-	<artifactId>beckend</artifactId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>admissio-beckend</name>
+	<name>admissio-backend</name>
 	<description>Backend API for admissio project — university admission prediction tool.</description>
 	<url/>
 	<licenses>

@@ -1,0 +1,23 @@
+name: admissio
+services:
+  backend:
+    build: ../admissio-backend
+    container_name: admissio-backend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  frontend:
+    build: ../admissio-frontend
+    container_name: admissio-frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
+  scraper:
+    build: ../admissio-scraper
+    container_name: admissio-scraper
+    # Поки без schedule: запускати вручну або пізніше через cron
+    ports:
+      - "8081:8081"
+    restart: unless-stopped

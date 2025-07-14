@@ -1,5 +1,5 @@
 # admissio-backend
-Сервіс бекенду для проєкту Admissio — система прогнозування шансів вступу до університету.
+Сервіс бекенду для проєкту **Admissio** — система прогнозування шансів вступу до університету.
 
 ## Технології
 - Java 24
@@ -10,8 +10,8 @@
 - Maven
 
 ## Запуск локально
-1. Запусти PostgreSQL (локально або через Docker).
-2. Налаштуй підключення у `src/main/resources/application.properties`.
+1. ~~Запусти PostgreSQL (локально або через Docker).~~
+2. ~~Налаштуй підключення у `src/main/resources/application.properties`.~~
 3. Запусти проект:
 ```bash
 ./mvnw spring-boot:run
@@ -21,3 +21,34 @@
 ```bash
 ./mvnw test
 ```
+
+## Запуск через Docker
+```bash
+docker build -t admissio-backend .
+docker run -p 8080:8080 admissio-backend
+```
+
+## Запуск усіх сервісів через Docker Compose
+Усі репозиторії мають бути клоновані в 1 деку, це має виглядати так:
+ - /admissio-backend
+ - /admissio-frontend
+ - /admissio-scraper
+
+Далі запустити усі сервіси, або лише ті, які потрібні
+```bash
+docker-compose up backend frontend scraper
+```
+
+## Запуск в IntelliJ
+Для зручного використання, рекомендую додати такі конфігурації:
+ - Spring-Boot
+   - Backend
+   ![backend config.png](https://private-user-images.githubusercontent.com/113092192/466097965-d0353272-0809-4557-a134-a4d9f9bf5a84.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTI1MDk1MzUsIm5iZiI6MTc1MjUwOTIzNSwicGF0aCI6Ii8xMTMwOTIxOTIvNDY2MDk3OTY1LWQwMzUzMjcyLTA4MDktNDU1Ny1hMTM0LWE0ZDlmOWJmNWE4NC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzE0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcxNFQxNjA3MTVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lMDkzMWU5NTQ0YjBmNGQ0OGVmY2NkOGIyMzNmNjU1MTA5MzUyYjgzOGY1NWI1ZGU0MTc4ODNmYmQzZDBhYzgzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.H1D9U2LwAhhDe_AQF94KHTNmk64gMSrfANjQu4x-Jfw)
+   - Scraper
+   ![scraper config](https://private-user-images.githubusercontent.com/113092192/466098623-e457dc80-780a-4e7d-b190-d58e084ddef4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTI1MDk2ODIsIm5iZiI6MTc1MjUwOTM4MiwicGF0aCI6Ii8xMTMwOTIxOTIvNDY2MDk4NjIzLWU0NTdkYzgwLTc4MGEtNGU3ZC1iMTkwLWQ1OGUwODRkZGVmNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzE0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcxNFQxNjA5NDJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hNjA5ZTI1YzkwZTkyZTcwOTBiZWY4ZjJlNjI0ZjQ3YWU1YWFjNDQ2MzIwNTAyNzNhYTU4NDIwMjA3M2JjNzVjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.cZdbXTeV-TFsQBbDEYaaWkd2Zk-d5ZH9FhmA1E6dLWQ)
+ - Web
+   - Frontend
+   ![frontend config](https://private-user-images.githubusercontent.com/113092192/466098686-3ec38eb2-e141-4942-b4fe-cb01fb21d654.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTI1MDk2ODIsIm5iZiI6MTc1MjUwOTM4MiwicGF0aCI6Ii8xMTMwOTIxOTIvNDY2MDk4Njg2LTNlYzM4ZWIyLWUxNDEtNDk0Mi1iNGZlLWNiMDFmYjIxZDY1NC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzE0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcxNFQxNjA5NDJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xYzcyM2ZhNjFmY2JlYjJkNTEwYWRiNDdmOTA4ZTlkYzZiOGVlZmZiOTJiNTY4MjA2ZDlkOTVjNDMzZTY3YjJmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.hUJL18fleE748Z0jaZJ9T6Dy_JzKYwF4oSumQAJCwj0)
+ - Docker
+ ![docker config](https://private-user-images.githubusercontent.com/113092192/466098765-480992f9-5bd4-4139-b367-6ee9340fdd51.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTI1MDk2ODIsIm5iZiI6MTc1MjUwOTM4MiwicGF0aCI6Ii8xMTMwOTIxOTIvNDY2MDk4NzY1LTQ4MDk5MmY5LTViZDQtNDEzOS1iMzY3LTZlZTkzNDBmZGQ1MS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzE0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcxNFQxNjA5NDJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jMmE5OGI2YTI2MjMyMTU1Yjk3OWMyNTUyMzBkYTJmZDg2MzgxYmY4OTI5MmNiMGY3NjBiMTQwMWNhY2ZjYTUzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.0xyOFxdsFILXF__qdNPsjHzAcyn2f_AjMI7DXuMyOv0)
+Тут легко змінювати сервіси, які підіймаються
