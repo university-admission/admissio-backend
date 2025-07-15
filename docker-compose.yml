@@ -3,6 +3,8 @@ services:
   backend:
     build: ../admissio-backend
     container_name: admissio-backend
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -21,3 +23,19 @@ services:
     ports:
       - "8081:8081"
     restart: unless-stopped
+
+  db:
+    image: postgres:17
+    container_name: admissio-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admissio
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: admissio_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
