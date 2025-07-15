@@ -1,13 +1,13 @@
-package org.admissio.beckend;
+package org.admissio.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AdmissioBeckendApplication {
+public class AdmissioBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AdmissioBeckendApplication.class, args);
+		SpringApplication.run(AdmissioBackendApplication.class, args);
 	}
 
 }
