@@ -19,6 +19,8 @@ services:
   scraper:
     build: ../admissio-scraper
     container_name: admissio-scraper
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     # Поки без schedule: запускати вручну або пізніше через cron
     ports:
       - "8081:8081"
