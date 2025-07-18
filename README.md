@@ -10,9 +10,8 @@
 - Maven
 
 ## Запуск локально
-1. ~~Запусти PostgreSQL (локально або через Docker).~~
-2. ~~Налаштуй підключення у `src/main/resources/application.properties`.~~
-3. Запусти проект:
+1. Запусти PostgreSQL (локально або через Docker).
+2. Запусти проект:
 ```bash
 ./mvnw spring-boot:run
 ```
@@ -55,3 +54,17 @@ docker-compose up backend frontend scraper
  - Docker
    ![docker config](./img%20for%20readme/Docker%20config.png)
 Тут легко змінювати сервіси, які підіймаються
+
+## Перегляд БД
+1. Перевірити чи не зайнятий порт 5432, і чи не запущена Postgres локально
+    - Для перевірки, у Win+R перейти по services.msc, знайти Postgres, і вимкнути якщо є
+2. Налаштувати підключення через вкладку Database
+    - Вибрати такі параметри:
+    - 
+      | **Field** | **Value**   |
+      |-----------|-------------|
+      | Host      | localhost   |
+      | Port      | 5432        |
+      | User      | admissio    |
+      | Password  | password    |
+      | Database  | admissio_db |
