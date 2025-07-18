@@ -36,3 +36,5 @@ jobs:
       run: ./mvnw clean verify
     - name: Run tests
       run: ./mvnw test
+      env:
+        DB_DDL_AUTO: update
