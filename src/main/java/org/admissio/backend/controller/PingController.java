@@ -1,4 +1,4 @@
-package org.admissio.backend.Controller;
+package org.admissio.backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 

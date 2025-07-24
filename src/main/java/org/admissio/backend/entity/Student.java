@@ -1,4 +1,4 @@
-package org.admissio.backend.Entity;
+package org.admissio.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
