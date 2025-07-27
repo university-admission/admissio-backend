@@ -17,8 +17,8 @@ public class UniversityController {
     @GetMapping
     public List<University> getUniversities(@RequestParam(required = false) String city) {
         if (city != null && !city.isBlank()) {
-            return universityService.getUniversitiesByCity(city);
+            return universityService.findAllByRegion(city);
         }
-        return universityService.getAllUniversities();
+        return universityService.findAll();
     }
 }

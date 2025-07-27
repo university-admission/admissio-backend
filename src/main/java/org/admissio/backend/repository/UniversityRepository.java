@@ -1,23 +1,13 @@
 package org.admissio.backend.repository;
 
+import lombok.NonNull;
 import org.admissio.backend.entity.University;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.admissio.backend.entity.UniversityRegion;
+import org.springframework.data.domain.Limit;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UniversityRepository extends JpaRepository<University, Long> {
-
-    @Query("""
-            SELECT u
-            FROM University u
-            WHERE LOWER(u.universityRegion.region) = LOWER(:city)
-            """)
-    List<University> findByCityIgnoreCase(String city);
-
-    @Query("""
-            SELECT DISTINCT u.universityRegion.region
-            FROM University u
-            """)
-    List<String> findAllDistinctCities();
+public interface UniversityRepository extends CrudRepository<University, Long> {
+    List<University> findAllByUniversityRegion(@NonNull UniversityRegion universityRegion);
 }
