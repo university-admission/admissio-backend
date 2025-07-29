@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -99,4 +99,44 @@ public class Major {
     @JsonIgnore
     @OneToMany(mappedBy = "major")
     private Set<Offer> offers;
+
+    @JsonIgnore
+    public double getMaxElectiveCoef() {
+        double maxCoef = ukLiteratureCoef;
+
+        if (foreignLangCoef > maxCoef) {
+            maxCoef = foreignLangCoef;
+        }
+        if (biologyCoef > maxCoef) {
+            maxCoef = biologyCoef;
+        }
+        if (geographyCoef > maxCoef) {
+            maxCoef = geographyCoef;
+        }
+        if (physicsCoef > maxCoef) {
+            maxCoef = physicsCoef;
+        }
+        if (chemistryCoef > maxCoef) {
+            maxCoef = chemistryCoef;
+        }
+
+        return maxCoef;
+    }
+
+    @JsonIgnore
+    public Double getCoefForElectiveSubjectByName(String electiveSubject) {
+        if (electiveSubject == null || electiveSubject.isBlank()) {
+            return null;
+        }
+
+        return switch (electiveSubject.toLowerCase()) {
+            case "ukrainian literature" -> ukLiteratureCoef;
+            case "foreign language" ->foreignLangCoef;
+            case "biology" -> biologyCoef;
+            case "geography" -> geographyCoef;
+            case "physics" -> physicsCoef;
+            case "chemistry" -> chemistryCoef;
+            default -> null;
+        };
+    }
 }
