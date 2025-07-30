@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "majors")
@@ -99,4 +99,33 @@ public class Major {
     @JsonIgnore
     @OneToMany(mappedBy = "major")
     private Set<Offer> offers;
+
+    @JsonIgnore
+    public double getMaxElectiveCoef() {
+        return Stream.of(
+                ukLiteratureCoef,
+                foreignLangCoef,
+                biologyCoef,
+                geographyCoef,
+                physicsCoef,
+                chemistryCoef
+        ).max(Double::compare).orElse(0.0);
+    }
+
+    @JsonIgnore
+    public Double getCoefForElectiveSubjectByName(String electiveSubject) {
+        if (electiveSubject == null || electiveSubject.isBlank()) {
+            return null;
+        }
+
+        return switch (electiveSubject.toLowerCase()) {
+            case "ukrainian literature" -> ukLiteratureCoef;
+            case "foreign language" ->foreignLangCoef;
+            case "biology" -> biologyCoef;
+            case "geography" -> geographyCoef;
+            case "physics" -> physicsCoef;
+            case "chemistry" -> chemistryCoef;
+            default -> null;
+        };
+    }
 }
