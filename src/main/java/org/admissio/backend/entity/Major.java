@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "majors")
@@ -102,25 +102,14 @@ public class Major {
 
     @JsonIgnore
     public double getMaxElectiveCoef() {
-        double maxCoef = ukLiteratureCoef;
-
-        if (foreignLangCoef > maxCoef) {
-            maxCoef = foreignLangCoef;
-        }
-        if (biologyCoef > maxCoef) {
-            maxCoef = biologyCoef;
-        }
-        if (geographyCoef > maxCoef) {
-            maxCoef = geographyCoef;
-        }
-        if (physicsCoef > maxCoef) {
-            maxCoef = physicsCoef;
-        }
-        if (chemistryCoef > maxCoef) {
-            maxCoef = chemistryCoef;
-        }
-
-        return maxCoef;
+        return Stream.of(
+                ukLiteratureCoef,
+                foreignLangCoef,
+                biologyCoef,
+                geographyCoef,
+                physicsCoef,
+                chemistryCoef
+        ).max(Double::compare).orElse(0.0);
     }
 
     @JsonIgnore
