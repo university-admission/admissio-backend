@@ -23,7 +23,7 @@ public class ApplicationService {
             return applications;
         }
 
-        return applicationRepository.findAllByQuotaTypeAndOfferIdAndIsBudget(QuotaType.GENERAL, offerId, true);
+        return applicationRepository.findAllByQuotaTypeAndOfferIdAndIsBudget(quotaType, offerId, true);
     }
 
     public List<Application> findAllByStudentId(Long studentId) {
