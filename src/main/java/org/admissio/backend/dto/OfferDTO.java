@@ -1,0 +1,83 @@
+package org.admissio.backend.dto;
+
+import org.admissio.backend.entity.EducationForm;
+import org.admissio.backend.entity.Major;
+import org.admissio.backend.entity.Offer;
+
+public record OfferDTO(
+        Long id,
+        Long edboId,
+        String name,
+        Major major,
+        String universityName,
+        String regionName,
+        String faculty,
+        String educationalProgram,
+        Integer price,
+        EducationForm educationForm,
+        Integer budgetPlaces,
+        Integer budgetPlacesCount,
+        Double minBudgetScore,
+        Integer contractPlaces,
+        Integer contractPlacesCount,
+        Double minContractScore,
+        Integer quota1Places,
+        Integer quota1PlacesCount,
+        Double minQuota1Score,
+        Integer quota2Places,
+        Integer quota2PlacesCount,
+        Double minQuota2Score,
+        Integer minUkLangScore,
+        Integer minMathScore,
+        Integer minHistoryScore,
+        Integer minUkLitScore,
+        Integer minForeignLangScore,
+        Integer minBiologyScore,
+        Integer minGeographyScore,
+        Integer minPhysicsScore,
+        Integer minChemistryScore,
+        Integer minCompetitionScore,
+        Integer minApplicationScore,
+        Integer additionalPoints,
+        Double regionCoef
+) {
+    public static OfferDTO fromEntity(Offer offer) {
+        return new OfferDTO(
+                offer.getId(),
+                offer.getEdboId(),
+                offer.getName(),
+                offer.getMajor(),
+                offer.getUniversity().getUniversityName(),
+                offer.getUniversity().getUniversityRegion().getRegion(),
+                offer.getFaculty(),
+                offer.getEducationalProgram(),
+                offer.getPrice(),
+                offer.getEducationForm(),
+                offer.getBudgetPlaces(),
+                offer.getBudgetPlacesCount(),
+                offer.getMinBudgetScore(),
+                offer.getContractPlaces(),
+                offer.getContractPlacesCount(),
+                offer.getMinContractScore(),
+                offer.getQuota1Places(),
+                offer.getQuota1PlacesCount(),
+                offer.getMinQuota1Score(),
+                offer.getQuota2Places(),
+                offer.getQuota2PlacesCount(),
+                offer.getMinQuota2Score(),
+                offer.getMinUkLangScore(),
+                offer.getMinMathScore(),
+                offer.getMinHistoryScore(),
+                offer.getMinUkLitScore(),
+                offer.getMinForeignLangScore(),
+                offer.getMinBiologyScore(),
+                offer.getMinGeographyScore(),
+                offer.getMinPhysicsScore(),
+                offer.getMinChemistryScore(),
+                offer.getMinCompetitionScore(),
+                offer.getMinApplicationScore(),
+                offer.getAdditionalPoints(),
+                offer.getRegionCoef()
+        );
+    }
+}

@@ -1,6 +1,7 @@
 package org.admissio.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.admissio.backend.dto.OfferDTO;
 import org.admissio.backend.entity.EducationForm;
 import org.admissio.backend.entity.Offer;
 import org.admissio.backend.repository.OfferRepository;
@@ -14,15 +15,25 @@ import java.util.List;
 public class OfferService {
     private final OfferRepository offerRepository;
 
-    public List<Offer> findAllByIds(List<Long> offerIds) {
-        if (offerIds == null)
-            return (List<Offer>) offerRepository.findAll();
+    public List<OfferDTO> findAllByIds(List<Long> offerIds) {
+        if (offerIds == null) {
+            List<Offer> offers = (List<Offer>) offerRepository.findAll();
+            return offers.stream()
+                    .map(OfferDTO::fromEntity)
+                    .toList();
+        }
         else
-            return offerRepository.findAllByIdIn(offerIds);
+            return offerRepository.findAllByIdIn(offerIds)
+                    .stream()
+                    .map(OfferDTO::fromEntity)
+                    .toList();
     }
 
-    public List<Offer> findAllByParams(Long majorId, Long regionId, Long universityId, EducationForm educationForm) {
-        return offerRepository.findAllByParams(majorId, regionId, universityId, educationForm);
+    public List<OfferDTO> findAllByParams(Long majorId, Long regionId, Long universityId, EducationForm educationForm) {
+        return offerRepository.findAllByParams(majorId, regionId, universityId, educationForm)
+                .stream()
+                .map(OfferDTO::fromEntity)
+                .toList();
     }
 
     public List<EducationForm> getAllEducationForms() {
