@@ -1,6 +1,8 @@
 package org.admissio.backend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.admissio.backend.dto.OfferDTO;
+import org.admissio.backend.entity.EducationForm;
 import org.admissio.backend.entity.Offer;
 import org.admissio.backend.service.OfferService;
 import org.springframework.http.HttpStatus;
@@ -19,16 +21,21 @@ public class OfferController {
     private final OfferService offerService;
 
     @GetMapping("")
-    public ResponseEntity<List<Offer>> findAllByIds(@RequestParam(value = "ids", required = false) List<Long> ids) {
+    public ResponseEntity<List<OfferDTO>> findAllByIds(@RequestParam(value = "ids", required = false) List<Long> ids) {
         return new ResponseEntity<>(offerService.findAllByIds(ids), HttpStatus.OK);
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Offer>> findAllByParam(
+    public ResponseEntity<List<OfferDTO>> findAllByParam(
             @RequestParam(value = "majorId", required = false) Long majorId,
             @RequestParam(value = "regionId", required = false) Long regionId,
             @RequestParam(value = "universityId", required = false) Long universityId,
-            @RequestParam(value = "educationForm", required = false) String educationForm) {
+            @RequestParam(value = "educationForm", required = false) EducationForm educationForm) {
         return new ResponseEntity<>(offerService.findAllByParams(majorId, regionId, universityId, educationForm),  HttpStatus.OK);
+    }
+
+    @GetMapping("/education-form")
+    public ResponseEntity<List<EducationForm>> getAllEducationForms() {
+        return new ResponseEntity<>(offerService.getAllEducationForms(),  HttpStatus.OK);
     }
 }
