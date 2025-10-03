@@ -1,10 +1,12 @@
 package org.admissio.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.admissio.backend.entity.EducationForm;
 import org.admissio.backend.entity.Offer;
 import org.admissio.backend.repository.OfferRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,7 +21,11 @@ public class OfferService {
             return offerRepository.findAllByIdIn(offerIds);
     }
 
-    public List<Offer> findAllByParams(Long majorId, Long regionId, Long universityId, String educationForm) {
+    public List<Offer> findAllByParams(Long majorId, Long regionId, Long universityId, EducationForm educationForm) {
         return offerRepository.findAllByParams(majorId, regionId, universityId, educationForm);
+    }
+
+    public List<EducationForm> getAllEducationForms() {
+        return Arrays.stream(EducationForm.values()).toList();
     }
 }

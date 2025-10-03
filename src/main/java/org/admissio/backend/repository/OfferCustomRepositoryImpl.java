@@ -3,6 +3,7 @@ package org.admissio.backend.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.admissio.backend.entity.EducationForm;
 import org.admissio.backend.entity.Offer;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +17,7 @@ public class OfferCustomRepositoryImpl implements OfferCustomRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Offer> findAllByParams(Long majorId, Long regionId, Long universityId, String educationForm) {
+    public List<Offer> findAllByParams(Long majorId, Long regionId, Long universityId, EducationForm educationForm) {
         StringBuilder queryStr = new StringBuilder("SELECT o FROM Offer o WHERE 1=1");
         List<Object> params = new ArrayList<>();
 
