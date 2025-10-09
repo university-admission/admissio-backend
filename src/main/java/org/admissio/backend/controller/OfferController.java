@@ -1,5 +1,6 @@
 package org.admissio.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.RequiredArgsConstructor;
 import org.admissio.backend.dto.OfferDTO;
 import org.admissio.backend.entity.EducationForm;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/offers")
 @RequiredArgsConstructor
+@SecurityRequirements
 public class OfferController {
     private final OfferService offerService;
 

@@ -1,5 +1,6 @@
 package org.admissio.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.admissio.backend.dto.ScoreCalculationRequestDto;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/calculate-score/offerId/{id}")
+@SecurityRequirements
 public class ScoreController {
 
     private final ScoreCalculationService scoreCalculationService;

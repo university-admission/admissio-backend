@@ -1,5 +1,6 @@
 package org.admissio.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.RequiredArgsConstructor;
 import org.admissio.backend.entity.Major;
 import org.admissio.backend.service.MajorService;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/majors")
 @RequiredArgsConstructor
+@SecurityRequirements
 public class MajorController {
     private final MajorService majorService;
 

@@ -1,5 +1,6 @@
 package org.admissio.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.RequiredArgsConstructor;
 import org.admissio.backend.entity.University;
 import org.admissio.backend.service.UniversityService;
@@ -10,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/universities")
 @RequiredArgsConstructor
+@SecurityRequirements
 public class UniversityController {
 
     private final UniversityService universityService;

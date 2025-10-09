@@ -1,5 +1,6 @@
 package org.admissio.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.RequiredArgsConstructor;
 import org.admissio.backend.entity.Application;
 import org.admissio.backend.entity.QuotaType;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/applications")
 @RequiredArgsConstructor
+@SecurityRequirements
 public class ApplicationController {
     private final ApplicationService applicationService;
 
