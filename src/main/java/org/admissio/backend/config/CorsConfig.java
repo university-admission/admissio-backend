@@ -1,4 +1,4 @@
-package org.admissio.backend;
+package org.admissio.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
