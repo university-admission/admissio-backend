@@ -1,6 +1,12 @@
 package org.admissio.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.admissio.backend.dto.JwtResponse;
 import org.admissio.backend.dto.LoginRequest;
@@ -19,10 +25,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/login")
 @RequiredArgsConstructor
 @SecurityRequirements
+@Tag(name = "Автентифікація", description = "API для входу в систему та отримання JWT токенів")
 class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
+    @Operation(
+            summary = "Вхід користувача",
+            description = "Приймає логін та пароль, у відповідь повертає JWT-токен та дані користувача."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Успішний вхід",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = JwtResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Невірні облікові данні",
+                    content = @Content()
+            )
+    })
     @PostMapping("")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(
