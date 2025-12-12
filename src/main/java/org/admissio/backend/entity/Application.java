@@ -1,6 +1,7 @@
 package org.admissio.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -60,5 +61,6 @@ public class Application {
     private Boolean isCounted = false;
 
     @Column(name = "is_checked", nullable = false)
+    @JsonIgnore
     private Boolean isChecked = false;
 }

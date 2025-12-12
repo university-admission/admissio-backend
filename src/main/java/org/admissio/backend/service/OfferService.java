@@ -23,20 +23,6 @@ public class OfferService {
     private final OfferRepository offerRepository;
     public final ScoreCalculationService scoreCalculationService;
 
-    public List<OfferDTO> findAllByIds(List<Long> offerIds) {
-        if (offerIds == null) {
-            List<Offer> offers = (List<Offer>) offerRepository.findAll();
-            return offers.stream()
-                    .map(OfferDTO::fromEntity)
-                    .toList();
-        }
-        else
-            return offerRepository.findAllByIdIn(offerIds)
-                    .stream()
-                    .map(OfferDTO::fromEntity)
-                    .toList();
-    }
-
     public List<OfferDTO> findAllByParams(Long majorId, Long regionId, Long universityId, EducationForm educationForm) {
         return offerRepository.findAllByParams(majorId, regionId, universityId, educationForm)
                 .stream()
@@ -56,18 +42,19 @@ public class OfferService {
             try {
                 String universityName = offer.getUniversity().getUniversityName();
                 String majorName = offer.getMajor().getMajorName();
+                String offerName = offer.getName();
                 String facultyName = offer.getFaculty();
+                EducationForm educationForm = offer.getEducationForm();
 
                 Double userScore = scoreCalculationService.calculateScore(offer.getId(), requestDto.getScoreCalculationRequestDto()).orElse(null);
 
                 Integer places = getPlacesCount(offer, requestDto);
-                Double passingScore = getPassingScore(offer, requestDto);
 
                 if (userScore == null) {
                     log.warn("Score calculation failed for offer {}", offer.getId());
                     trackedOffers.add(new TrackedOfferAnalyticsDto(
-                            offer.getId(), universityName, majorName, facultyName,
-                            0.0, 0, 0, 0, places, passingScore
+                            offer.getId(), universityName, majorName, offerName, facultyName, educationForm,
+                            0.0, 0, 0, places
                     ));
                     continue;
                 }
@@ -78,7 +65,6 @@ public class OfferService {
                                 app.getIsCounted())
                         .toList();
 
-                Integer totalApplications = relevantApplications.size();
 
                 long betterThanMeAll = relevantApplications.stream()
                         .filter(app -> app.getScore() > userScore)
@@ -86,8 +72,7 @@ public class OfferService {
                 Integer rankAll = (int) betterThanMeAll + 1;
 
                 long betterThanMeActual = relevantApplications.stream()
-                        .filter(Application::getIsActual)
-                        .filter(app -> app.getScore() > userScore)
+                        .filter(app -> app.getIsActual() && app.getScore() > userScore)
                         .count();
                 Integer rankActual = (int) betterThanMeActual + 1;
 
@@ -95,13 +80,13 @@ public class OfferService {
                         offer.getId(),
                         universityName,
                         majorName,
+                        offerName,
                         facultyName,
+                        educationForm,
                         userScore,
                         rankActual,
                         rankAll,
-                        totalApplications,
-                        places,
-                        passingScore
+                        places
                 ));
 
             } catch (Exception e) {
@@ -118,15 +103,6 @@ public class OfferService {
             case GENERAL -> offer.getBudgetPlaces();
             case QUOTA_1 -> offer.getQuota1Places();
             case QUOTA_2 -> offer.getQuota2Places();
-        };
-    }
-
-    private Double getPassingScore(Offer offer, TrackedOffersRequestDto requestDto) {
-        if (!requestDto.getIsBudget()) return offer.getMinContractScore();
-        return switch (requestDto.getQuotaType()) {
-            case GENERAL -> offer.getMinBudgetScore();
-            case QUOTA_1 -> offer.getMinQuota1Score();
-            case QUOTA_2 -> offer.getMinQuota2Score();
         };
     }
 }
