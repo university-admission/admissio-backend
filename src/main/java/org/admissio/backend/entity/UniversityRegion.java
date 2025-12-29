@@ -1,6 +1,7 @@
 package org.admissio.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,10 +18,12 @@ public class UniversityRegion {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Schema(description = "Унікальний ідентифікатор регіону", example = "1")
     private Long id;
 
     @NonNull
     @Column(name = "region", nullable = false)
+    @Schema(description = "Назва регіону", example = "Київська область")
     private String region;
 
     @JsonIgnore

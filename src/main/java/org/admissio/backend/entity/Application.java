@@ -1,6 +1,7 @@
 package org.admissio.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -32,12 +33,6 @@ public class Application {
     @JoinColumn(name = "offer_id", referencedColumnName = "id", nullable = false)
     private Offer offer;
 
-    @Column(name = "raw_score", nullable = false)
-    @NonNull
-    @Min(0)
-    @Max(200)
-    private Double rawScore;
-
     @Column(name = "score", nullable = false)
     @NonNull
     @Min(0)
@@ -54,7 +49,7 @@ public class Application {
     @NonNull
     private Boolean isBudget;
 
-    @Column(name = "quote_type", nullable = false)
+    @Column(name = "quota_type", nullable = false)
     @NonNull
     @Enumerated(EnumType.STRING)
     private QuotaType quotaType;
@@ -66,5 +61,6 @@ public class Application {
     private Boolean isCounted = false;
 
     @Column(name = "is_checked", nullable = false)
+    @JsonIgnore
     private Boolean isChecked = false;
 }
