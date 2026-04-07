@@ -12,6 +12,22 @@ import org.springframework.context.annotation.Configuration;
 class OpenAPIConfig {
     @Bean
     public OpenAPI customOpenAPI() {
-        return new OpenAPI().info(new Info().title("Admissio API").version("1.0"));
+        final SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")
+                .in(SecurityScheme.In.HEADER)
+                .name("Authorization");
+
+        final Components components = new Components()
+                .addSecuritySchemes("bearerAuth", securityScheme);
+
+        final SecurityRequirement securityRequirement = new SecurityRequirement()
+                .addList("bearerAuth");
+
+        return new OpenAPI()
+                .info(new Info().title("Admissio API").version("1.0"))
+                .components(components)
+                .addSecurityItem(securityRequirement);
     }
 }

@@ -27,7 +27,7 @@ public class UniversityController {
     @Operation(
             summary = "Отримати список усіх університетів",
             description = "Повертає повний список університетів. " +
-                    "Якщо вказано необов'язковий параметр 'city', " +
+                    "Якщо вказано необов'язковий параметр 'regionName', " +
                     "список буде відфільтровано за відповідним регіоном."
     )
     @ApiResponses(value = {
@@ -38,13 +38,13 @@ public class UniversityController {
     @GetMapping
     public List<University> getUniversities(
             @Parameter(
-                    name = "city",
+                    name = "regionName",
                     description = "Назва міста (регіону) для фільтрації",
                     example = "Київ"
             )
-            @RequestParam(required = false) String city) {
-        if (city != null && !city.isBlank()) {
-            return universityService.findAllByRegion(city);
+            @RequestParam(required = false) String regionName) {
+        if (regionName != null && !regionName.isBlank()) {
+            return universityService.findAllByRegion(regionName);
         }
         return universityService.findAll();
     }

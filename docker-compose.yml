@@ -4,7 +4,11 @@ services:
     build: ../admissio-backend
     container_name: admissio-backend
     environment:
+      - JWT_SECRET=${JWT_SECRET}
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -15,25 +19,32 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
+    depends_on:
+      - db
 
   scraper:
     build: ../admissio-scraper
     container_name: admissio-scraper
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     # Поки без schedule: запускати вручну або пізніше через cron
     ports:
       - "8081:8081"
     restart: unless-stopped
+    depends_on:
+      - db
 
   db:
     image: postgres:17
     container_name: admissio-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: admissio
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: admissio_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
