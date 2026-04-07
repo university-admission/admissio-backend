@@ -7,9 +7,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.admissio.backend.security.SecurityConstant;
+import jakarta.validation.constraints.NotNull;
 import org.admissio.backend.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private final UserDetailsServiceImpl userDetailsService;
     private final HandlerExceptionResolver resolver;
 
+    @Value("${jwt.secret}")
+    private String secretKey;
+
     public JWTAuthorizationFilter(UserDetailsServiceImpl userDetailsService, @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.userDetailsService = userDetailsService;
         this.resolver = resolver;
@@ -32,17 +36,17 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String header = request.getHeader(SecurityConstant.AUTHORIZATION_HEADER);
+        String header = request.getHeader("Authorization");
 
-        if(header == null || !header.startsWith(SecurityConstant.AUTHORIZATION_HEADER_PREFIX)){
+        if(header == null || !header.startsWith("Bearer ")){
             filterChain.doFilter(request,response);
             return;
         }
 
         try {
-            String token = header.replace(SecurityConstant.AUTHORIZATION_HEADER_PREFIX, "");
+            String token = header.replace("Bearer ", "");
 
-            String user = JWT.require(Algorithm.HMAC512(SecurityConstant.SECRET_KEY))
+            String user = JWT.require(Algorithm.HMAC512(secretKey))
                     .build()
                     .verify(token)
                     .getSubject();

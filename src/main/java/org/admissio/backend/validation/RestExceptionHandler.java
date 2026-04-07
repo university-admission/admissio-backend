@@ -28,7 +28,7 @@ public class RestExceptionHandler {
                 .body(Map.of(
                         "status", HttpStatus.FORBIDDEN.value(),
                         "error", "Forbidden",
-                        "message", "Невалідний токен доступу."
+                        "message", "Не валідний токен доступу."
                 ));
     }
 }
